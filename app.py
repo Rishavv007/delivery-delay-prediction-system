@@ -44,6 +44,10 @@ with col2:
     
 submit_button = st.button(label="Predict Delay Risk")
 
+# Sidebar for API Configuration
+st.sidebar.title("Configuration")
+api_url = st.sidebar.text_input("API URL", value="http://127.0.0.1:8000")
+
 if submit_button:
     # Prepare payload
     payload = {
@@ -57,7 +61,9 @@ if submit_button:
     
     with st.spinner("Analyzing risk..."):
         try:
-            response = requests.post("http://localhost:8000/predict", json=payload)
+            # Ensure URL has trailing /predict
+            target_url = f"{api_url.rstrip('/')}/predict"
+            response = requests.post(target_url, json=payload)
             
             if response.status_code == 200:
                 result = response.json()
@@ -83,4 +89,4 @@ if submit_button:
                 st.error(f"Error from API: {response.text}")
                 
         except requests.exceptions.ConnectionError:
-            st.error("Failed to connect to the prediction API. Ensure the FastAPI server is running on http://localhost:8000.")
+            st.error(f"Failed to connect to the prediction API at {api_url}. If the app is deployed on Streamlit Cloud, it cannot access your local server (localhost / 127.0.0.1). You must provide a public URL for the API.")
