@@ -45,6 +45,38 @@ API available at: `http://localhost:8000`
 
 Interactive docs: `http://localhost:8000/docs`
 
+## Streamlit Dashboard
+
+![Delivery Delay Predictor Dashboard](dashboard.png)
+
+A user-friendly web interface to interact with the prediction API without writing code.
+
+### Running the Dashboard
+
+1. **Start the API server first**:
+   ```bash
+   uvicorn api.main:app --host 0.0.0.0 --port 8000
+   ```
+
+2. **Open a new terminal and start Streamlit**:
+   ```bash
+   streamlit run app.py
+   ```
+
+3. **Access the dashboard**: `http://localhost:8501`
+
+### Running with a Public Tunnel (ngrok)
+
+To access your local API from a deployed Streamlit dashboard (e.g., Streamlit Cloud):
+
+1. **Install and run ngrok**:
+   ```bash
+   brew install ngrok  # If not installed
+   ngrok http 8000
+   ```
+2. **Copy the public forwarding URL** (e.g., `https://xxxx.ngrok-free.app`).
+3. **Paste the URL** into the "API URL" box in the dashboard's sidebar.
+
 ## API Usage
 
 ### Predict Delivery Delay
